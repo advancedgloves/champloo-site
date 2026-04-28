@@ -1703,14 +1703,14 @@ function Pricing() {
         >
           <Reveal>
             <PricingTierCard
-              range="1\u201330 employees"
+              range="1–30 employees"
               positioning="One workflow. One team. Built fast, deployed clean."
               buildAnchor="from $30K"
               buildLabel="Discovery sets the final scope"
               systemDescriptor="Monthly fee covers infrastructure, monitoring, scheduled maintenance, and a defined number of support hours. Sized to the system during discovery."
               bullets={[
                 "Single fine-tuned workflow, fully scoped",
-                "Core integrations \u2014 CRM, comms, one industry system",
+                "Core integrations — CRM, comms, one industry system",
                 "Custom dashboard and audit trail",
                 "4-week MVP, shadow test, then live",
                 "Quarterly review built into the engagement",
@@ -1721,7 +1721,7 @@ function Pricing() {
           </Reveal>
           <Reveal delay={80}>
             <PricingTierCard
-              range="30\u2013200 employees"
+              range="30–200 employees"
               positioning="Multiple workflows. Deeper integrations. The system becomes the backbone."
               buildAnchor="from $75K"
               buildLabel="Discovery sets the final scope"
@@ -1744,7 +1744,7 @@ function Pricing() {
               positioning="Custom builds. Multi-system integration. Strategic partnership pricing."
               buildAnchor="Talk to us"
               buildLabel="Scope determines price. Discovery determines scope."
-              systemDescriptor="Monthly fee structured to the engagement. Includes dedicated support, defined SLA, and integration with internal teams. No published number \u2014 every engagement is scoped from zero."
+              systemDescriptor="Monthly fee structured to the engagement. Includes dedicated support, defined SLA, and integration with internal teams. No published number — every engagement is scoped from zero."
               bullets={[
                 "Multi-location or multi-system rollouts",
                 "Regulated environments with audit requirements",
