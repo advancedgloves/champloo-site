@@ -1298,190 +1298,583 @@ function Results() {
 }
 
 // ─── PRICING ─────────────────────────────────────────────────
-function Pricing() {
-  const tiers = [
-    {
-      name: "Starter",
-      audience: "1–3 people",
-      setup: "$3,000",
-      monthly: "$1,500",
-      year1: "$21,000",
-      features: [
-        "Single AI workflow",
-        "Local hardware deployment",
-        "Monthly tuning",
-        "Dashboard access",
-      ],
-    },
-    {
-      name: "Standard",
-      audience: "5–15 people",
-      setup: "$5,000",
-      monthly: "$2,500",
-      year1: "$35,000",
-      features: [
-        "Multi-workflow system",
-        "Priority fine-tuning",
-        "Custom integrations",
-        "Weekly performance reports",
-      ],
-      highlight: true,
-    },
-    {
-      name: "Premium",
-      audience: "15+ / multi-branch",
-      setup: "$7,500",
-      monthly: "$4,000",
-      year1: "$55,500",
-      features: [
-        "Enterprise-scale deployment",
-        "Dedicated support",
-        "Multi-location sync",
-        "Custom AI development",
-      ],
-    },
-  ];
-
+function PricingChip({ children, color }) {
   return (
-    <section id="pricing" style={{ padding: "100px 60px", background: COLORS.sumi }}>
-      <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+    <span
+      style={{
+        fontSize: 10,
+        color: color || COLORS.beni,
+        letterSpacing: 2,
+        textTransform: "uppercase",
+        fontFamily: FONTS.body,
+        fontWeight: 700,
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
+function PricingSectionTitle({ children, sub }) {
+  return (
+    <div style={{ marginBottom: sub ? 16 : 32 }}>
+      <h2
+        style={{
+          fontFamily: FONTS.display,
+          fontSize: sub ? 22 : 36,
+          fontWeight: 700,
+          color: sub ? COLORS.gold : COLORS.washi,
+          margin: 0,
+          letterSpacing: sub ? 0 : -0.5,
+          lineHeight: 1.2,
+        }}
+      >
+        {children}
+      </h2>
+      {!sub && (
+        <div
+          style={{
+            width: 60,
+            height: 3,
+            background: `linear-gradient(90deg, ${COLORS.beni}, ${COLORS.beni}00)`,
+            marginTop: 12,
+            borderRadius: 2,
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+function PricingLede({ children }) {
+  return (
+    <p
+      style={{
+        fontFamily: FONTS.body,
+        fontSize: 16,
+        lineHeight: 1.75,
+        color: COLORS.stone,
+        margin: "0 0 24px",
+        maxWidth: 680,
+      }}
+    >
+      {children}
+    </p>
+  );
+}
+
+function PricingStructureBlock({ index, title, body }) {
+  return (
+    <div
+      style={{
+        background: COLORS.darkCard,
+        border: `1px solid ${COLORS.border}`,
+        borderRadius: 8,
+        padding: "24px 24px 22px",
+        position: "relative",
+      }}
+    >
+      <div
+        style={{
+          fontFamily: FONTS.mono,
+          fontSize: 11,
+          color: COLORS.beni,
+          letterSpacing: 2,
+          marginBottom: 14,
+        }}
+      >
+        0{index}
+      </div>
+      <h4
+        style={{
+          fontFamily: FONTS.display,
+          fontSize: 20,
+          fontWeight: 700,
+          color: COLORS.washi,
+          margin: "0 0 10px",
+          letterSpacing: -0.3,
+        }}
+      >
+        {title}
+      </h4>
+      <p
+        style={{
+          fontFamily: FONTS.body,
+          fontSize: 13.5,
+          lineHeight: 1.65,
+          color: COLORS.stone,
+          margin: 0,
+        }}
+      >
+        {body}
+      </p>
+    </div>
+  );
+}
+
+function PricingTierCard({
+  range,
+  positioning,
+  buildAnchor,
+  buildLabel,
+  systemDescriptor,
+  bullets,
+  cta,
+  featured,
+  onCta,
+}) {
+  const [hover, setHover] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        background: COLORS.darkCard,
+        border: `1px solid ${featured ? COLORS.beni + "55" : COLORS.border}`,
+        borderRadius: 10,
+        padding: "32px 28px 28px",
+        display: "flex",
+        flexDirection: "column",
+        gap: 22,
+        position: "relative",
+        transition: "transform 200ms ease-out, border-color 200ms ease-out",
+        transform: hover ? "translateY(-3px)" : "translateY(0)",
+        minHeight: 580,
+      }}
+    >
+      {featured && (
+        <div
+          style={{
+            position: "absolute",
+            top: -10,
+            left: 24,
+            background: COLORS.sumi,
+            border: `1px solid ${COLORS.beni}55`,
+            padding: "3px 10px",
+            borderRadius: 4,
+          }}
+        >
+          <PricingChip color={COLORS.beni}>Most engagements</PricingChip>
+        </div>
+      )}
+      {/* Range header */}
+      <div>
+        <div
+          style={{
+            fontFamily: FONTS.mono,
+            fontSize: 12,
+            color: COLORS.gold,
+            letterSpacing: 2,
+            marginBottom: 10,
+            textTransform: "uppercase",
+          }}
+        >
+          {range}
+        </div>
+        <div
+          style={{
+            fontFamily: FONTS.display,
+            fontSize: 18,
+            color: COLORS.washi,
+            fontWeight: 700,
+            lineHeight: 1.35,
+            letterSpacing: -0.2,
+          }}
+        >
+          {positioning}
+        </div>
+      </div>
+      {/* Brush divider */}
+      <div
+        style={{
+          width: "100%",
+          height: 1,
+          background: `linear-gradient(90deg, ${COLORS.beni}80, ${COLORS.beni}00)`,
+        }}
+      />
+      {/* Build anchor */}
+      <div>
+        <div style={{ marginBottom: 6 }}>
+          <PricingChip color={COLORS.subtleText}>Build</PricingChip>
+        </div>
+        <div
+          style={{
+            fontFamily: FONTS.display,
+            fontSize: 38,
+            fontWeight: 900,
+            color: COLORS.washi,
+            letterSpacing: -1,
+            lineHeight: 1,
+          }}
+        >
+          {buildAnchor}
+        </div>
+        <div
+          style={{
+            fontFamily: FONTS.body,
+            fontSize: 12,
+            color: COLORS.subtleText,
+            marginTop: 6,
+            fontStyle: "italic",
+          }}
+        >
+          {buildLabel}
+        </div>
+      </div>
+      {/* System fee descriptor */}
+      <div>
+        <div style={{ marginBottom: 6 }}>
+          <PricingChip color={COLORS.subtleText}>System fee</PricingChip>
+        </div>
+        <div
+          style={{
+            fontFamily: FONTS.body,
+            fontSize: 13,
+            color: COLORS.stone,
+            lineHeight: 1.6,
+          }}
+        >
+          {systemDescriptor}
+        </div>
+      </div>
+      {/* What's in it */}
+      <div style={{ flex: 1 }}>
+        <div style={{ marginBottom: 12 }}>
+          <PricingChip color={COLORS.subtleText}>Inside the build</PricingChip>
+        </div>
+        <ul
+          style={{
+            listStyle: "none",
+            padding: 0,
+            margin: 0,
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+          }}
+        >
+          {bullets.map((b, i) => (
+            <li
+              key={i}
+              style={{
+                fontFamily: FONTS.body,
+                fontSize: 13,
+                color: COLORS.stone,
+                lineHeight: 1.55,
+                paddingLeft: 18,
+                position: "relative",
+              }}
+            >
+              <span
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 6,
+                  width: 8,
+                  height: 2,
+                  background: COLORS.beni,
+                }}
+              />
+              {b}
+            </li>
+          ))}
+        </ul>
+      </div>
+      {/* CTA */}
+      <button
+        onClick={onCta}
+        style={{
+          background: featured ? COLORS.beni : "transparent",
+          border: `1px solid ${featured ? COLORS.beni : COLORS.washi + "33"}`,
+          color: COLORS.washi,
+          padding: "12px 16px",
+          borderRadius: 6,
+          fontFamily: FONTS.body,
+          fontSize: 13,
+          fontWeight: 700,
+          letterSpacing: 0.5,
+          cursor: "pointer",
+          transition: "background 150ms ease-out",
+          marginTop: "auto",
+        }}
+      >
+        {cta}
+      </button>
+    </div>
+  );
+}
+
+function Pricing() {
+  return (
+    <section
+      id="pricing"
+      style={{
+        background: COLORS.sumi,
+        color: COLORS.washi,
+        fontFamily: FONTS.body,
+        padding: "80px 60px 120px",
+      }}
+    >
+      <div style={{ maxWidth: 1240, margin: "0 auto" }}>
+        {/* Header */}
         <Reveal>
-          <SectionLabel>Pricing</SectionLabel>
-          <SectionHeading>
-            AI that runs 24/7 for less than you&rsquo;d expect.
-          </SectionHeading>
-          <BrushDivider />
-          <BodyText>
-            No per-seat pricing. No surprise API bills. One flat monthly
-            subscription that covers the system, the tuning, and the support.
-            Setup includes hardware for on-premise deployments.
-          </BodyText>
+          <div style={{ marginBottom: 56 }}>
+            <div style={{ marginBottom: 16 }}>
+              <PricingChip>Pricing</PricingChip>
+            </div>
+            <h1
+              style={{
+                fontFamily: FONTS.display,
+                fontSize: 56,
+                fontWeight: 900,
+                color: COLORS.washi,
+                margin: "0 0 24px",
+                letterSpacing: -1.2,
+                lineHeight: 1.05,
+                maxWidth: 880,
+              }}
+            >
+              Priced against the problem,
+              <br />
+              <span style={{ color: COLORS.beni }}>not the hours.</span>
+            </h1>
+            <PricingLede>
+              Every Champloo engagement is scoped to the workflow being
+              replaced and the value of replacing it. Discovery determines what
+              gets built. Build determines what gets paid. No tier card, no
+              upsell ladder, no monthly fees set in stone.
+            </PricingLede>
+          </div>
+        </Reveal>
+
+        {/* Structure */}
+        <Reveal>
+          <div style={{ marginBottom: 64 }}>
+            <PricingSectionTitle>How we structure pricing</PricingSectionTitle>
+            <PricingLede>
+              Three components, every engagement. The structure stays the same.
+              What changes is scale.
+            </PricingLede>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: 16,
+                marginTop: 28,
+              }}
+            >
+              <PricingStructureBlock
+                index={1}
+                title="Build"
+                body="One-time fee, scoped during discovery, paid against delivery milestones. Covers the full system: fine-tuned model, integrations, validation layer, dashboard, deployment."
+              />
+              <PricingStructureBlock
+                index={2}
+                title="System"
+                body="Monthly fee. Covers infrastructure, monitoring, scheduled maintenance, security updates, model tuning on cadence, and a defined cap of support hours. Scoped during discovery."
+              />
+              <PricingStructureBlock
+                index={3}
+                title="Overage"
+                body="Hours beyond the monthly cap billed at a defined rate, in 30-minute increments. New features and new workflows scoped as change orders, not folded into support."
+              />
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Tiers */}
+        <Reveal>
+          <div style={{ marginBottom: 32 }}>
+            <PricingSectionTitle>Engagement scale</PricingSectionTitle>
+            <PricingLede>
+              Scope scales with the size of the operation we&rsquo;re building
+              inside. Build anchors below are floors &mdash; discovery
+              determines the final number.
+            </PricingLede>
+          </div>
         </Reveal>
 
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            gap: 20,
-            marginTop: 20,
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 24,
+            marginBottom: 80,
           }}
         >
-          {tiers.map((t, i) => (
-            <Reveal key={t.name} delay={i * 80}>
-              <div
-                style={{
-                  background: COLORS.darkCard,
-                  border: `1px solid ${t.highlight ? COLORS.beni : COLORS.border}`,
-                  borderRadius: 8,
-                  padding: 28,
-                  position: "relative",
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                {t.highlight && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: -1,
-                      left: 28,
-                      right: 28,
-                      height: 2,
-                      background: COLORS.beni,
-                      borderRadius: "0 0 2px 2px",
-                    }}
-                  />
-                )}
-                <div
-                  style={{
-                    fontFamily: FONTS.display,
-                    fontSize: 20,
-                    color: COLORS.washi,
-                    fontWeight: 700,
-                  }}
-                >
-                  {t.name}
-                </div>
-                <div
-                  style={{
-                    fontFamily: FONTS.body,
-                    fontSize: 12,
-                    color: COLORS.subtleText,
-                    marginTop: 4,
-                  }}
-                >
-                  {t.audience}
-                </div>
-                <div style={{ marginTop: 20 }}>
-                  <span
-                    style={{
-                      fontFamily: FONTS.mono,
-                      fontSize: 32,
-                      color: COLORS.gold,
-                      fontWeight: 500,
-                    }}
-                  >
-                    {t.monthly}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: FONTS.body,
-                      fontSize: 12,
-                      color: COLORS.subtleText,
-                    }}
-                  >
-                    /month
-                  </span>
-                </div>
-                <div
-                  style={{
-                    fontFamily: FONTS.mono,
-                    fontSize: 11,
-                    color: COLORS.subtleText,
-                    marginTop: 4,
-                  }}
-                >
-                  {t.setup} setup · {t.year1} year 1
-                </div>
-                <div style={{ marginTop: 20, flex: 1 }}>
-                  {t.features.map((f) => (
-                    <div
-                      key={f}
-                      style={{
-                        fontFamily: FONTS.body,
-                        fontSize: 13,
-                        color: COLORS.stone,
-                        padding: "6px 0",
-                        display: "flex",
-                        gap: 8,
-                        alignItems: "center",
-                      }}
-                    >
-                      <span style={{ color: COLORS.success, fontSize: 10 }}>
-                        ●
-                      </span>{" "}
-                      {f}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          ))}
+          <Reveal>
+            <PricingTierCard
+              range="1\u201330 employees"
+              positioning="One workflow. One team. Built fast, deployed clean."
+              buildAnchor="from $30K"
+              buildLabel="Discovery sets the final scope"
+              systemDescriptor="Monthly fee covers infrastructure, monitoring, scheduled maintenance, and a defined number of support hours. Sized to the system during discovery."
+              bullets={[
+                "Single fine-tuned workflow, fully scoped",
+                "Core integrations \u2014 CRM, comms, one industry system",
+                "Custom dashboard and audit trail",
+                "4-week MVP, shadow test, then live",
+                "Quarterly review built into the engagement",
+              ]}
+              cta="Start the conversation"
+              onCta={() => {}}
+            />
+          </Reveal>
+          <Reveal delay={80}>
+            <PricingTierCard
+              range="30\u2013200 employees"
+              positioning="Multiple workflows. Deeper integrations. The system becomes the backbone."
+              buildAnchor="from $75K"
+              buildLabel="Discovery sets the final scope"
+              systemDescriptor="Monthly fee scaled to system complexity, integration depth, and operational stakes. Includes extended support hours and faster response windows."
+              bullets={[
+                "Multiple workflows or one high-volume workflow",
+                "Multi-system integration with role-based access",
+                "Advanced dashboard, monitoring, and reporting",
+                "Extended onboarding and team training",
+                "Quarterly performance review and tuning cycle",
+              ]}
+              cta="Start the conversation"
+              featured
+              onCta={() => {}}
+            />
+          </Reveal>
+          <Reveal delay={160}>
+            <PricingTierCard
+              range="200+ employees"
+              positioning="Custom builds. Multi-system integration. Strategic partnership pricing."
+              buildAnchor="Talk to us"
+              buildLabel="Scope determines price. Discovery determines scope."
+              systemDescriptor="Monthly fee structured to the engagement. Includes dedicated support, defined SLA, and integration with internal teams. No published number \u2014 every engagement is scoped from zero."
+              bullets={[
+                "Multi-location or multi-system rollouts",
+                "Regulated environments with audit requirements",
+                "Custom infrastructure, including on-premise builds",
+                "Integration alongside existing internal teams",
+                "Defined SLA and dedicated point of contact",
+              ]}
+              cta="Talk to us"
+              onCta={() => {}}
+            />
+          </Reveal>
         </div>
-        <Reveal delay={300}>
-          <p
+
+        {/* Closing — what we don't do */}
+        <Reveal>
+          <div
             style={{
-              fontFamily: FONTS.body,
-              fontSize: 12,
-              color: COLORS.subtleText,
-              textAlign: "center",
-              marginTop: 24,
+              background: COLORS.darkCard,
+              border: `1px solid ${COLORS.border}`,
+              borderRadius: 10,
+              padding: "36px 40px",
+              marginBottom: 40,
             }}
           >
-            3-month minimum commitment, then month-to-month. Hardware costs
-            included in setup fee for on-premise deployments.
-          </p>
+            <PricingSectionTitle sub>What we don&rsquo;t do</PricingSectionTitle>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 32,
+                marginTop: 8,
+              }}
+            >
+              <div>
+                <p
+                  style={{
+                    fontFamily: FONTS.body,
+                    fontSize: 14,
+                    color: COLORS.stone,
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}
+                >
+                  We don&rsquo;t sell software seats. We don&rsquo;t bill by
+                  the hour. We don&rsquo;t run open-ended retainers that drift
+                  into unprofitable accounts. We don&rsquo;t price against our
+                  cost &mdash; we price against the value of the workflow
+                  being replaced.
+                </p>
+              </div>
+              <div>
+                <p
+                  style={{
+                    fontFamily: FONTS.body,
+                    fontSize: 14,
+                    color: COLORS.stone,
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}
+                >
+                  If we can&rsquo;t justify the build with concrete ROI math
+                  against the metric you&rsquo;re trying to move, we don&rsquo;t
+                  take the engagement. The system has to pay back, or it
+                  shouldn&rsquo;t get built.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Final CTA strip */}
+        <Reveal>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "32px 40px",
+              background: `linear-gradient(135deg, ${COLORS.darkCard} 0%, ${COLORS.sumi} 100%)`,
+              border: `1px solid ${COLORS.border}`,
+              borderRadius: 10,
+              gap: 32,
+              flexWrap: "wrap",
+            }}
+          >
+            <div style={{ flex: "1 1 420px" }}>
+              <h3
+                style={{
+                  fontFamily: FONTS.display,
+                  fontSize: 28,
+                  color: COLORS.washi,
+                  margin: "0 0 8px",
+                  letterSpacing: -0.5,
+                  fontWeight: 700,
+                }}
+              >
+                Ready when you are.
+              </h3>
+              <p
+                style={{
+                  fontFamily: FONTS.body,
+                  fontSize: 14,
+                  color: COLORS.stone,
+                  margin: 0,
+                  lineHeight: 1.6,
+                }}
+              >
+                Discovery call is 30 minutes. We&rsquo;ll walk through the
+                workflow, the math, and what a build looks like for your
+                operation.
+              </p>
+            </div>
+            <button
+              style={{
+                background: COLORS.beni,
+                border: "none",
+                color: COLORS.washi,
+                padding: "16px 28px",
+                borderRadius: 6,
+                fontFamily: FONTS.body,
+                fontSize: 14,
+                fontWeight: 700,
+                letterSpacing: 0.5,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Book discovery &rarr;
+            </button>
+          </div>
         </Reveal>
       </div>
     </section>
